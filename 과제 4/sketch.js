@@ -37,12 +37,11 @@ function draw() {
   Engine.update(engine);
   background(20, 24, 33); // 어두운 밤하늘 배경
 
-  // 1. 빠른 주기로 별을 생성하여 화면에 빽빽하게 쌓이도록 연출 (4프레임마다 생성)
+  // 빠른 주기로 별을 생성하여 화면에 빽빽하게 쌓이도록 연출 
   if (frameCount % 4 === 0 && stars.length < maxStars) {
     let x = random(30, width - 30);
     let size = random(18, 32); // 개수가 많이 쌓이도록 크기를 적절히 조절
     
-    // 수업에서 다룬 Bodies.polygon 사용
     let star = Bodies.polygon(x, -30, 5, size, {
       restitution: 0.2, // 반발력을 낮춰 서로 튕겨 나가지 않고 잘 안착되게 설정
       friction: 0.8,    // 마찰력을 높여 층층이 잘 쌓이게 설정
@@ -57,7 +56,6 @@ function draw() {
     Composite.add(engine.world, star);
   }
 
-  // 2. 수업 방식 그대로 Vertices를 순회하며 별 그리기
   for (let star of stars) {
     beginShape();
     fill(star.fill);
