@@ -3,7 +3,6 @@ const R=()=>min(width,height)*.09;
 function setup(){createCanvas(windowWidth,windowHeight);
 textAlign(CENTER,CENTER);
 start(1);}
-
 function start(l){lv=l;
 s='wait';
 n=0;
@@ -11,7 +10,6 @@ lt=0;
 vy=0;
 b=null;
 a={x:width/2,y:height*.28,body:true};}
-
 function ap(x,y,body){
 const r=R();
 noStroke();
@@ -28,11 +26,10 @@ translate(x+r*.4,y-r*1.12);
 rotate(-.5);
 ellipse(0,0,r*.7,r*.32);
 pop();}
-
 function draw(){
 background(255,250,235);
 let ox=0;
-if(s=='done'&&millis()-t>700)start(2);
+if(s=='done'&&millis()-t>700)s='end';
 if(s=='shake'){const p=(millis()-t)/1200;
 if(p>=1){s='fall';
 vy=0;}
@@ -57,7 +54,7 @@ if(s=='fall'){
 vy+=.5;
 a.y+=vy;
 if(b)b.y+=vy;
-if((b?min(a.y,b.y):a.y)>height+R()*2)start(lv%3+1);}
+if((b?min(a.y,b.y):a.y)>height+R()*2)s='end';}
 ap(a.x+ox,a.y,a.body);
 if(b)ap(b.x,b.y,true);
 fill(90);
@@ -65,11 +62,11 @@ noStroke();
 textSize(28);
 text('LEVEL '+lv,width/2,40);
 textSize(18);
-text(s=='wait'?['사과를 한 번 터치하세요','사과를 빠르게 두 번 터치하세요','화면을 빠르게 세 번 터치하세요'][lv-1]:(s=='ready'||s=='drag'||s=='thrown')?'새 사과를 드래그해서 던지세요':'',width/2,height-40);}
-
+text(s=='end'?'화면을 터치하면 다음 레벨로 넘어가요':s=='wait'?['사과를 한 번 터치하세요','사과를 빠르게 두 번 터치하세요','화면을 빠르게 세 번 터치하세요'][lv-1]:(s=='ready'||s=='drag'||s=='thrown')?'새 사과를 드래그해서 던지세요':'',width/2,height-40);}
 const hit=o=>dist(mouseX,mouseY,o.x,o.y)<R()*1.2;
 function mousePressed(){
 const m=millis();
+if(s=='end'){start(lv%3+1);return false;}
 if(lv==1&&s=='wait'&&hit(a)){a.body=false;
 s='done';
 t=m;}
@@ -84,7 +81,6 @@ lt=m;
 if(n==3){b={x:width/2,y:height*.75,vx:0,vy:0};
 s='ready';}}}
 return false;}
-
 function mouseDragged(){return false;}
 function mouseReleased(){
 if(s=='drag'){
@@ -93,7 +89,6 @@ if(sp>40){b.vx*=40/sp;
 b.vy*=40/sp;}
 s=sp>1?'thrown':'ready';}
 return false;}
-
 function windowResized(){resizeCanvas(windowWidth,windowHeight);
 if(s!='fall'){a.x=width/2;
 a.y=height*.28;}
