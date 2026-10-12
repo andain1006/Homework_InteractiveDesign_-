@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#f3efe6" />
+  <title>MOODLING — Feel it. Move it. Let it be.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- p5 캔버스가 들어가는 자리 -->
+  <main id="stage"></main>
+
+  <!-- 상단: 짧은 문장만 -->
+  <header id="hint">
+    <h1>MOODLING</h1>
+    <p id="hint-text">지금 머릿속에는 어떤 생각이 떠다니고 있나요?</p>
+  </header>
+
+  <!-- 드래그할 때만 나타나는 영역 -->
+  <div id="zone-keep" class="zone" aria-hidden="true"><span>간직하기</span></div>
+  <div id="zone-let" class="zone" aria-hidden="true"><span>흘려보내기</span></div>
+
+  <!-- 하단 버튼 -->
+  <button id="btn-vault" type="button">
+    오늘의 마음 <b id="count-badge">0</b>
+  </button>
+
+  <!-- 마음 조각 만들기 / 고치기 -->
+  <div id="composer" class="sheet" hidden>
+    <div class="card">
+      <p id="composer-title">잘 정리하지 않아도 괜찮아요. 떠오르는 대로 남겨보세요.</p>
+      <textarea id="memo-text" maxlength="120" rows="3" placeholder="예) 내일 발표가 걱정돼"></textarea>
+
+      <fieldset>
+        <legend>색</legend>
+        <div id="swatches" class="row"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>움직임</legend>
+        <div id="motions" class="row">
+          <button type="button" class="chip" data-motion="shaky">흔들리는</button>
+          <button type="button" class="chip" data-motion="heavy">무거운</button>
+          <button type="button" class="chip" data-motion="light">가벼운</button>
+        </div>
+      </fieldset>
+
+      <div class="row end">
+        <button type="button" id="btn-cancel" class="ghost">닫기</button>
+        <button type="button" id="btn-save" class="solid">조각 만들기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 오늘의 마음 / 보관함 -->
+  <aside id="vault" class="sheet" hidden>
+    <div class="card tall">
+      <div class="row between">
+        <h2>오늘의 마음</h2>
+        <button type="button" id="btn-vault-close" class="ghost">닫기</button>
+      </div>
+      <p id="summary"></p>
+
+      <h3>간직한 생각</h3>
+      <ul id="list-archived" class="list"></ul>
+
+      <h3>흘려보낸 생각</h3>
+      <ul id="list-released" class="list"></ul>
+    </div>
+  </aside>
+
+  <!-- 되돌리기 알림 -->
+  <div id="toast" role="status" aria-live="polite" hidden>
+    <span id="toast-msg"></span>
+    <button type="button" id="toast-undo" hidden>되돌리기</button>
+  </div>
+
+  <!-- p5.js (고정 버전) → storage.js → sketch.js 순서 중요 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+  <script src="storage.js"></script>
+  <script src="sketch.js"></script>
+</body>
+</html>
