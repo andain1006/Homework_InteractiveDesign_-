@@ -44,7 +44,7 @@ const PHRASES = [
   '시간이 조금 더 필요할 뿐이야.', '나는 이 순간을 지나갈 수 있어.',
 ];
 const SPEEDS = { slow: [5, 7], normal: [4, 6], fast: [3, 4] };   // [들이쉬기, 내쉬기] 초
-const ORDER = ['emotion', 'cause', 'breath', 'place', 'design', 'comfort'];
+const ORDER = ['emotion', 'breath', 'cause', 'place', 'design', 'comfort'];
 const OUT_MS = 750;                       // 화면이 사라지는 시간 (style.css의 --out과 맞춤)
 const INK = '63,74,72';
 const BREATH_RGB = '176,200,140';          // 심호흡 물방울 색: 차분한 연두 (바꾸고 싶으면 이 값만 수정)
@@ -148,7 +148,7 @@ function bindUI() {
       draft = { ...Store.look(), emotion: e.k, cause: '', mobile: null, id: Store.uid(), comfort: null, createdAt: Date.now() };
       $('#chosen').textContent = `${e.sym}  ${e.name}`;
       $('#cause-text').value = '';
-      go('cause');
+      go('breath');
     });
     box.appendChild(b);
   });
@@ -156,10 +156,10 @@ function bindUI() {
 
   // 02 원인
   $('#btn-cause-back').addEventListener('click', () => go('emotion'));
-  $('#btn-cause-next').addEventListener('click', () => { draft.cause = $('#cause-text').value.trim(); go('breath'); });
+  $('#btn-cause-next').addEventListener('click', () => { draft.cause = $('#cause-text').value.trim(); go('place'); });
 
   // 03 호흡
-  $('#btn-breath-next').addEventListener('click', () => go('place'));
+  $('#btn-breath-next').addEventListener('click', () => go('cause'));
   bindDesign();
   document.querySelectorAll('[data-speed]').forEach((b) =>
     b.addEventListener('click', () => {
